@@ -1,23 +1,19 @@
-import React, { ReactNode, useEffect, useRef } from "react";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import User from "../../component/User";
-import PostMentionInput from "../../component/MentionInput";
-import Box from "@mui/material/Box";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import TagIcon from "@mui/icons-material/Tag";
-import Button from "@mui/material/Button";
 import ImageIcon from "@mui/icons-material/Image";
-import { MentionsInput, Mention } from "react-mentions";
-import { useState } from "react";
-import { MouseEvent } from "react";
+import TagIcon from "@mui/icons-material/Tag";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import "emoji-mart/css/emoji-mart.css";
-import { Popover, TextField } from "@mui/material";
+import { useRouter } from "next/router";
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import { Mention, MentionsInput } from "react-mentions";
 import EmojiPicker from "../../component/EmojiPicker";
 import PostGallery from "../../component/PostGallery";
+import User from "../../component/User";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addForm, getId, editform } from "../../redux/slices/post-slice";
-import { useRouter } from "next/router";
+import { addForm, editform, getId } from "../../redux/slices/post-slice";
 
 const users = [
   {
@@ -75,7 +71,6 @@ function Post() {
       .split(/(?<=\^\^\^\__)(.*?)(?=\@\@\@\^\^\^)/)
       .filter((item) => !item.includes("@"))
       .toString();
-
     const hashtag = text
       .split(/(?<=\~\~\~\_\_)(.*?)(?=\$\$\$\~\~\~)/)
       .filter((item) => !item.includes("~"))

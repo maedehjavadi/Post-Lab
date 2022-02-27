@@ -5,7 +5,6 @@ interface postState {
   posts: any[];
   postEdit?: any;
   postLikes?: any;
-  currentUser?:any;
 }
 
 const initialState: postState = {
@@ -73,14 +72,6 @@ const initialState: postState = {
       postLikes: [],
     },
   ],
-  currentUser:{  
-    id:3,
-    firstName:"mohammadreza",
-    lastName:"Akbari",
-    userName:"mohmmadrezamf2014@gmail.com",
-    password:2020,
-    postLikes: [],
-},
   // postLikes: [],
 };
 
@@ -105,15 +96,16 @@ const postSlice = createSlice({
     },
     // ------------------------------------------------------------------------------
     likePost(state, action: PayloadAction<any>) {
-      state.currentUser.postLikes.push (action.payload)
-      const currentuserIndex = state.users.findIndex((item)=>item.id===state.currentUser.id)
-      state.users.splice(currentuserIndex , 1 , state.currentUser)
+      console.log('state.users.currentUser',state.users.currentUser)
+      state.users.currentUser.postLikes.push(action.payload)
+      const currentuserIndex = state.users.findIndex((item)=>item.id===state.users.currentUser.id)
+      state.users.splice(currentuserIndex , 1 , state.users.currentUser)
     },
 
     dislikePost(state, action: PayloadAction<any>) {
-      state.currentUser.postLikes.splice(state.currentUser.postLikes.indexOf(action.payload), 1);
-      const currentuserIndex = state.users.findIndex((item)=>item.id===state.currentUser.id)
-      state.users.splice(currentuserIndex , 1 , state.currentUser)
+      state.users.currentUser.postLikes.splice(state.users.currentUser.postLikes.indexOf(action.payload), 1);
+      const currentuserIndex = state.users.findIndex((item)=>item.id===state.users.currentUser.id)
+      state.users.splice(currentuserIndex , 1 , state.users.currentUser)
     },
   },
 });

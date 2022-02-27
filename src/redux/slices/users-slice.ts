@@ -37,7 +37,7 @@ const usersSlice = createSlice({
           user.password === action.payload.password
       );
       if (user) {
-        state.currentUser = user;
+        state.currentUser = {...user,postLikes: []};
         state.ErrorMessage = "";
         console.log(state.currentUser);
       } else {
@@ -45,7 +45,10 @@ const usersSlice = createSlice({
         console.log(state.ErrorMessage);
       }
     },
+    addUser(state, action: PayloadAction<any>) {
+        state.users.push(action.payload);
+    },
   },
 });
-export const { catchUserName } = usersSlice.actions;
+export const { catchUserName, addUser } = usersSlice.actions;
 export default usersSlice.reducer;

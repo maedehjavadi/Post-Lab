@@ -11,7 +11,7 @@ function User() {
 
 
 
-  const user =useAppSelector(state => state.post.posts);
+  const user =useAppSelector(state => state.users.currentUser);
 
   // const dispatch = useDispatch()
   return (

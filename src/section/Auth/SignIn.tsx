@@ -44,7 +44,7 @@ function SignIn() {
   };
   useEffect(() => {
     if (currentUser) {
-      router.push("/createPost")
+      router.push("/post/list")
     }
   }, [currentUser]);
   return (
