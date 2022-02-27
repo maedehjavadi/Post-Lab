@@ -11,7 +11,7 @@ function User() {
 
 
 
-  const user =useAppSelector(state => state.counter.values);
+  const user =useAppSelector(state => state.post.posts);
 
   // const dispatch = useDispatch()
   return (
