@@ -59,34 +59,73 @@ export default function SignUp() {
   };
 
   return (
-    <Box sx={{ mt: 2 ,ml:2}}>
+    <Box
+      sx={{
+        m: 4,
+        p: 6,
+        border: "1px solid #949aa452",
+        width: "30%",
+        backgroundColor: "#03a9f414",
+        borderRadius: 5,
+        boxShadow: '0px 5px 10px 1px #0000004f'
+      }}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
-          <Box>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h4" sx={{textShadow:'0px 15px #0000000a'}}>Signup</Typography>
+          <Box sx={{width:'100%'}}>
             <TextField
+              fullWidth
               label="FirstName"
               type="text"
               {...register("firstName")}
             />
             <Box sx={{ color: "red" }}>{errors.firstName?.message}</Box>
           </Box>
-          <Box>
-            <TextField label="lastName" type="text" {...register("lastName")} />
+          <Box  sx={{width:'100%'}}>
+            <TextField
+              fullWidth
+              label="lastName"
+              type="text"
+              {...register("lastName")}
+            />
             <Box sx={{ color: "red" }}>{errors.lastName?.message}</Box>
           </Box>
-          <Box>
-            <TextField label="UserName" type="text" {...register("userName")} />
+          <Box  sx={{width:'100%'}}>
+            <TextField
+              fullWidth
+              label="UserName"
+              type="text"
+              {...register("userName")}
+            />
             <Box sx={{ color: "red" }}>{errors.userName?.message}</Box>
-            <Typography sx={{color:'red'}}>{errorMassage}</Typography>
+            <Typography sx={{ color: "red" }}>{errorMassage}</Typography>
           </Box>
-          <Box>
-            <TextField label="password" type="text" {...register("password")} />
+          <Box  sx={{width:'100%'}}>
+            <TextField
+              fullWidth
+              label="password"
+              type="text"
+              {...register("password")}
+            />
             <Box sx={{ color: "red" }}>{errors.password?.message}</Box>
           </Box>
         </Box>
 
-        <Box sx={{mt:2}}>
-          <Button variant="contained" type="submit" sx={{ textTransform: "none" }}>
+        <Box sx={{ mt: 2 }}>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ textTransform: "none" }}
+          >
             Register
           </Button>
           <NextLink href="/">
