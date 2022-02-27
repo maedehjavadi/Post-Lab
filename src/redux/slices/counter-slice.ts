@@ -21,7 +21,7 @@ const initialState: CounterState = {
       avatarImg: [
         "https://zone-assets-api.vercel.app/assets/images/avatars/avatar_2.jpg",
       ],
-    },
+    } ,
     {
       id: 2,
       body: "Salam @@@_1^^^Farshad@@@^^^  Khobi? $$$2~~~reactjs$$$~~~ ro yad gerefti? agar nemidoni az @@@60166c39f20f22176c29b047^^^_Bill Gates@@@^^^ bepors😂😂.$$$_6016fea7c0aee429a857f216~~~_javascript$$$~~~ ro ham yad begir😉",
