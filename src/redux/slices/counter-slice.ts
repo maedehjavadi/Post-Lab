@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CounterState {
-  value: any;
+  values: any;
   item: any;
 }
 
 const initialState: CounterState = {
-  value: [
+  values: [
     {
       id: 1,
-      body: "Salam @@@_60166c0d62820e1c40b20e91^^^Elon Musk@@@^^^  Khobi? $$$6016f2aa258a450dc47519b6~~~reactjs$$$~~~ ro yad gerefti? agar nemidoni az @@@60166c39f20f22176c29b047^^^_Bill Gates@@@^^^ bepors😂😂.$$$_6016fea7c0aee429a857f216~~~_javascript$$$~~~ ro ham yad begir😉",
+      body: "Salam @@@_3^^^Farhad@@@^^^  Khobi? $$$2~~~reactjs$$$~~~ ro yad gerefti? agar nemidoni az @@@60166c39f20f22176c29b047^^^_Bill Gates@@@^^^ bepors😂😂.$$$_6016fea7c0aee429a857f216~~~_javascript$$$~~~ ro ham yad begir😉",
       hashtag: "mohaamad",
       mentsions: "akbari",
       datetime: "2018-12-10T13:49:51.141Z",
@@ -24,7 +24,7 @@ const initialState: CounterState = {
     },
     {
       id: 2,
-      body: "Salam @@@_60166c0d62820e1c40b20e91^^^Elon Musk@@@^^^  Khobi? $$$6016f2aa258a450dc47519b6~~~reactjs$$$~~~ ro yad gerefti? agar nemidoni az @@@60166c39f20f22176c29b047^^^_Bill Gates@@@^^^ bepors😂😂.$$$_6016fea7c0aee429a857f216~~~_javascript$$$~~~ ro ham yad begir😉",
+      body: "Salam @@@_1^^^Farshad@@@^^^  Khobi? $$$2~~~reactjs$$$~~~ ro yad gerefti? agar nemidoni az @@@60166c39f20f22176c29b047^^^_Bill Gates@@@^^^ bepors😂😂.$$$_6016fea7c0aee429a857f216~~~_javascript$$$~~~ ro ham yad begir😉",
       hashtag: "mohaamad",
       mentsions: "akbari",
       datetime: "2018-12-10T13:49:51.141Z",
@@ -38,7 +38,7 @@ const initialState: CounterState = {
       ],
     },
   ],
-  
+  item:{}
 };
 
 const counterSlice = createSlice({
@@ -46,13 +46,21 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     addForm(state, action: PayloadAction<any>) {
-      state.value = [...state.value, action.payload];
+      state.values = [...state.values, action.payload];
     },
     deleteForm(state, action: PayloadAction<any>) {
-      state.value = state.value.filter((item) => item.id !== action.payload);
+      state.values = state.values.filter((item) => item.id !== action.payload);
     },
+    getId(state, action: PayloadAction<any>){
+      state.item= state.values.find((item)=> item.id===action.payload)
+      // console.log(state.item)
+    },
+    updatePost(state, action:PayloadAction<any>){
+      const Index=state.values.findIndex((item)=>item.id===action.payload.id)
+      state.values.splice(Index,1,action.payload)
+    }
   },
 });
 
-export const { addForm, deleteForm } = counterSlice.actions;
+export const { addForm, deleteForm , getId,updatePost} = counterSlice.actions;
 export default counterSlice.reducer;

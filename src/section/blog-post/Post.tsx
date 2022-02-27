@@ -15,12 +15,9 @@ import "emoji-mart/css/emoji-mart.css";
 import { Popover, TextField } from "@mui/material";
 import EmojiPicker from "../../component/EmojiPicker";
 import PostGallery from "../../component/PostGallery";
-import {useAppDispatch , useAppSelector} from '../../redux/hooks';
-import { addForm } from '../../redux/slices/counter-slice';
-import {useRouter} from "next/router"
-
-
-
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { addForm } from "../../redux/slices/counter-slice";
+import { useRouter } from "next/router";
 
 const users = [
   {
@@ -58,32 +55,38 @@ const tags = [
 
 function Post() {
   const dispatch = useAppDispatch();
-  const router = useRouter()
+  const router = useRouter();
   const [text, setText] = useState<string>("");
   const [image, setImage] = useState<string[]>([]);
 
-// add form to list 
-function AddFormToList() {
-  const mentions = text.split(/(?<=\^\^\^\__)(.*?)(?=\@\@\@\^\^\^)/).filter(item => !item.includes('@')).toString();
-  const hashtag = text.split(/(?<=\~\~\~\_\_)(.*?)(?=\$\$\$\~\~\~)/).filter(item => !item.includes('~')).toString();
-  text.replace(/(?<=\~\~\~\_\_)(?=\$\$\$\~\~\~)/,'')
-  dispatch(addForm(
-    { 
-      id:Math.floor(Math.random() * 1000),
-      body: text,
-      hashtag:hashtag,
-      mentsions:mentions,
-      datetime:"2018-12-10T13:49:51.141Z",
-      createdBy:"student1",
-      images:image,
-      avatarImg:['https://zone-assets-api.vercel.app/assets/images/avatars/avatar_2.jpg'],
-      },
-  ))
-  router.push('/')
-}
+  // add form to list
+  function AddFormToList() {
+    const mentions = text
+      .split(/(?<=\^\^\^\__)(.*?)(?=\@\@\@\^\^\^)/)
+      .filter((item) => !item.includes("@"))
+      .toString();
+    const hashtag = text
+      .split(/(?<=\~\~\~\_\_)(.*?)(?=\$\$\$\~\~\~)/)
+      .filter((item) => !item.includes("~"))
+      .toString();
 
-
-
+    console.log(text.replace("@@@____", ""));
+    dispatch(
+      addForm({
+        id: Math.floor(Math.random() * 1000),
+        body: text,
+        hashtag: hashtag,
+        mentsions: mentions,
+        datetime: "2018-12-10T13:49:51.141Z",
+        createdBy: "student1",
+        images: image,
+        avatarImg: [
+          "https://zone-assets-api.vercel.app/assets/images/avatars/avatar_2.jpg",
+        ],
+      })
+    );
+    router.push("/");
+  }
 
   // ------------------------------------------------
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -105,7 +108,6 @@ function AddFormToList() {
   // const [showPicker, setShowPicker] = useState<string>();
   const handleChange = (e: any) => {
     setText(e.target.value);
-    
   };
 
   return (
@@ -181,7 +183,7 @@ function AddFormToList() {
 
             <Button
               onClick={() => {
-                setText(text + "@");
+                setText(text+'@');
                 if (inputRef) inputRef.current?.focus();
               }}
             >

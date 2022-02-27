@@ -13,9 +13,12 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { deleteForm } from "../../redux/slices/counter-slice";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
+// import Link from "@mui/material/Link";
 import DialogAction from "@mui/material/DialogActions";
+import NextLink from "next/link";
 
 function Card(props: any) {
+  const { id } = props;
   const [open, setOpen] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
@@ -90,6 +93,15 @@ function Card(props: any) {
           >
             Delete
           </Button>
+          <NextLink href={`post/${id}`}>
+            <Button
+              onClick={() => {
+                // setOpen(true);
+              }}
+            >
+              Edit
+            </Button>
+          </NextLink>
         </Box>
       </Grid>
     </>

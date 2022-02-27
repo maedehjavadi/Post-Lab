@@ -11,7 +11,7 @@ function User() {
 
 
 
-  const user =useAppSelector(state => state.counter.value);
+  const user =useAppSelector(state => state.counter.values);
 
   // const dispatch = useDispatch()
   return (

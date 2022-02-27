@@ -13,7 +13,7 @@ import NextLink from "next/link";
 function CardList(props: any) {
   const dispatch = useAppDispatch();
 
-  const newCard = useAppSelector((state) => state.counter.value);
+  const newCard = useAppSelector((state) => state.counter.values);
   const [cardData, setCardData] = useState<any[]>([]);
   const [pagination, setPagination] = useState<any>(3);
   const [clickButton, setClickButton] = useState(false);
