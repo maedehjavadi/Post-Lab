@@ -32,7 +32,7 @@ export default function PostGallery(props) {
 
       <Box sx={{mt:2}}>
         <Grid container spacing={2}>
-          {props.image.map((item, index) => {
+          {props.image?.map((item, index) => {
             return (
               <Grid item xs={6}>
                 <Box key={item} sx={{ position: "relative" }}>

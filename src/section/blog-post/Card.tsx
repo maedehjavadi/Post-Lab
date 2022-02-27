@@ -9,21 +9,39 @@ import {
 import React, { useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { deleteForm } from "../../redux/slices/counter-slice";
+import { deleteForm } from "../../redux/slices/post-slice";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogAction from "@mui/material/DialogActions";
+import Link from "@mui/material/Link";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { likePost, dislikePost } from "../../redux/slices/post-slice";
 
 function Card(props: any) {
+  const [likeColor, setLikeColor] = useState(false);
+  const { id ,comments } = props;
+  const { query } = useRouter();
   const [open, setOpen] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
 
   function deleteHandler() {
     dispatch(deleteForm(props.id));
     console.log(props.id);
     setOpen(false);
+  }
+
+  function likeHandler() {
+    if (!likeColor) {
+      dispatch(likePost(id));
+      setLikeColor(!likeColor);
+      console.log("like");
+    } else {
+      dispatch(dislikePost(id));
+      setLikeColor(!likeColor);
+      console.log("DisLike");
+    }
   }
 
   return (
@@ -63,9 +81,15 @@ function Card(props: any) {
           >
             {props.body}
           </Typography>
-          <Box sx={{ p: 2 }}>
-            <FavoriteIcon sx={{ mr: 2, color: "#fff" }} />
-            <CommentIcon sx={{ color: "#fff" }} />
+          <Box sx={{ px: 0, display: "flex" }}>
+            <Box onClick={likeHandler}>
+              <FavoriteIcon
+                sx={{ mr: 2, color: likeColor ? "#dc2626" : "#fff" }}
+              />
+            </Box>
+            <Box>
+              <CommentIcon sx={{ color: "#fff" }} />
+            </Box>
           </Box>
           <Dialog open={open}>
             <DialogTitle>Are you Sure ?</DialogTitle>
@@ -90,6 +114,12 @@ function Card(props: any) {
           >
             Delete
           </Button>
+
+          <NextLink href={`/createPost?id=${id}`}>
+            <Button variant="contained" sx={{ height: "20px" }}>
+              edit
+            </Button>
+          </NextLink>
         </Box>
       </Grid>
     </>

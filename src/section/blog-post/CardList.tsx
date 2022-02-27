@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addForm } from "../../redux/slices/counter-slice";
+import { addForm } from "../../redux/slices/post-slice";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import Link from "@mui/material/Link";
@@ -12,12 +12,10 @@ import NextLink from "next/link";
 
 function CardList(props: any) {
   const dispatch = useAppDispatch();
-
-  const newCard = useAppSelector((state) => state.counter.value);
+  const newCard = useAppSelector((state) => state.post.posts);
   const [cardData, setCardData] = useState<any[]>([]);
   const [pagination, setPagination] = useState<any>(3);
   const [clickButton, setClickButton] = useState(false);
-
   const slice = newCard.slice(0, pagination);
 
   useEffect(() => {
@@ -35,6 +33,7 @@ function CardList(props: any) {
     <>
       <Grid container spacing={2}>
         {slice.map((item: any) => (
+     
           <Card
             key={item}
             id={item.id}
@@ -45,6 +44,7 @@ function CardList(props: any) {
             createdBy={item.createdBy}
             images={item.images}
             avatarImg={item.avatarImg}
+            comments={item.comments}
           />
         ))}
       </Grid>

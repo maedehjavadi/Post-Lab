@@ -6,11 +6,13 @@ import EmojiPicker from '../src/component/EmojiPicker'
 import MentionInput from '../src/component/MentionInput'
 import PostGallery from '../src/component/PostGallery'
 import CardList from '../src/section/blog-post/CardList'
+import Landing from '../src/section/Landing'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-<CardList />
+{/* <CardList /> */}
+<Landing/>
       {/* <EmojiPicker />
       <MentionInput />
       <PostGallery /> */}
