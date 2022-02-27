@@ -69,8 +69,6 @@ function Post() {
       .split(/(?<=\~\~\~\_\_)(.*?)(?=\$\$\$\~\~\~)/)
       .filter((item) => !item.includes("~"))
       .toString();
-
-    console.log(text.replace("@@@____", ""));
     dispatch(
       addForm({
         id: Math.floor(Math.random() * 1000),
@@ -143,12 +141,18 @@ function Post() {
                   data={users}
                   markup="@@@____id__^^^____display__@@@^^^"
                   style={{ backgroundColor: "#d1c4e9" }}
+                  appendSpaceOnAdd={true}
+                  displayTransform={(id, display) => {
+                    return `@${display}`;
+                  }}
                 />
                 <Mention
                   trigger="#"
                   data={tags}
                   markup="$$$____id__~~~____display__$$$~~~"
                   style={{ backgroundColor: "#d1c4e9" }}
+                  appendSpaceOnAdd={true}
+
                 />
               </MentionsInput>
             </Box>
@@ -206,5 +210,4 @@ function Post() {
     </Container>
   );
 }
-
 export default Post;
