@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UsersState {
   users: any;
-  currentUser: any;
-  ErrorMessage:string;
+  currentUser?: any;
+  ErrorMessage: string;
 }
 
 const initialState: UsersState = {
@@ -14,7 +14,6 @@ const initialState: UsersState = {
       lastName: "javadi",
       userName: "mjd",
       password: "12345678",
-      ErrorMessage: "",
     },
     {
       id: 2,
@@ -22,11 +21,9 @@ const initialState: UsersState = {
       lastName: "shabani",
       userName: "fsh",
       password: "12345678",
-      ErrorMessage: "",
     },
   ],
-  currentUser: {},
-  ErrorMessage:''
+  ErrorMessage: "",
 };
 
 const usersSlice = createSlice({
@@ -34,26 +31,18 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     catchUserName(state, action: PayloadAction<any>) {
-      console.log(
-        state.users.findIndex(
-          (user) => user.userName === action.payload.username
-        )
+      const user = state.users.find(
+        (user) =>
+          user.userName === action.payload.username &&
+          user.password === action.payload.password
       );
-      // console.log(Index)
-      if (
-        state.users.findIndex(
-          (user) => user.userName === action.payload.username
-        ) == 0 &&
-        state.users.findIndex(
-          (user) => user.password === action.payload.password
-        ) == 0
-      ) {
-        state.currentUser= state.users.find((item)=> item.userName===action.payload.username)
-        state.ErrorMessage=''
-        console.log(state.currentUser)
+      if (user) {
+        state.currentUser = user;
+        state.ErrorMessage = "";
+        console.log(state.currentUser);
       } else {
-         state.ErrorMessage='UserName or Password is not correct'
-         console.log(state.ErrorMessage)
+        state.ErrorMessage = "UserName or Password is not correct";
+        console.log(state.ErrorMessage);
       }
     },
   },

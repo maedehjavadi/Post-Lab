@@ -3,22 +3,18 @@ import NextLink from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useAppDispatch , useAppSelector} from "../../redux/hooks";
-import {catchUserName} from '../../redux/slices/users-slice'
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { catchUserName } from "../../redux/slices/users-slice";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
 
 type UserSubmitForm = {
   username: string;
   password: string;
 };
 
-
-
 function SignIn() {
-  
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.users.currentUser);
   const ErrorMessage = useAppSelector((state) => state.users.ErrorMessage);
   const router = useRouter();
@@ -38,18 +34,26 @@ function SignIn() {
     resolver: yupResolver(validationSchema),
   });
   const onSubmit = (data: UserSubmitForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    // const userName= data.username
-    dispatch(catchUserName(data))
+    dispatch(catchUserName(data));
   };
   useEffect(() => {
     if (currentUser) {
-      router.push("/createPost")
+      router.push("/createPost");
     }
-  }, [currentUser]);
+  }, [currentUser, router]);
   return (
-    <Box sx={{ p: 2 }}>
-      <p>{ErrorMessage}</p>
+    <Box
+      sx={{
+        p: 6,
+        width: "30%",
+        backgroundColor: "#03a9f414",
+        border: "1px solid #949aa452",
+        m: 4,
+        borderRadius: 5,
+        boxShadow: "0px 5px 10px 1 px #0000004f",
+      }}
+    >
+      <Typography sx={{color:'red'}}>{ErrorMessage}</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ mb: 2 }}>
           <TextField
@@ -74,8 +78,8 @@ function SignIn() {
           <Button type="submit" sx={{ textTransform: "none" }}>
             Log in
           </Button>
-          <NextLink href='/signUpPage'>
-            <Button type='button' sx={{ textTransform: "none" }}>
+          <NextLink href="/signUpPage">
+            <Button type="button" sx={{ textTransform: "none" }}>
               Sign Up
             </Button>
           </NextLink>
