@@ -19,6 +19,10 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { likePost, dislikePost } from "../../redux/slices/post-slice";
+import { ContactSupportOutlined } from "@mui/icons-material";
+
+
+
 
 function Card(props: any) {
  
@@ -26,12 +30,18 @@ function Card(props: any) {
   const { query } = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.post.currentUser);
 
+  
+  
   function deleteHandler() {
     dispatch(deleteForm(props.id));
     console.log(props.id);
     setOpen(false);
+    
   }
+console.log(currentUser.postLikes.length);
+  
 
   function likeHandler() {
     if (like) {
@@ -49,24 +59,16 @@ function Card(props: any) {
   return (
     <>
       <Grid item md={4} sx={{ borderRadius: 2 }}>
-        <Box
-          sx={{
-            p: 2,
-            border: "1px solid #949aa452",
-            backgroundColor: "#03a9f414",
-            borderRadius: 5,
-            boxShadow: "0px 5px 10px 1px #0000004f",
-          }}
-        >
+        <Box sx={{ backgroundColor: "#999" }}>
           <Box
             sx={{
               display: "flex",
               p: 2,
-              borderBottom: "1px solid #7d868b4d",
+              borderBottom: "1px solid #000",
             }}
           >
             <Avatar src={props.avatarImg}></Avatar>
-            <Typography sx={{ mt: 1, ml: 2, color: "#000" }}>
+            <Typography sx={{ mt: 1, ml: 2, color: "#fff" }}>
               {props.createdBy}
             </Typography>
           </Box>
@@ -82,41 +84,26 @@ function Card(props: any) {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
-              borderBottom: "1px solid #7d868b4d",
+              borderBottom: "1px solid #000",
               p: 2,
-              color: "#000",
+              color: "#fff",
               boxOrient: "vertical",
               lineClamp: 3,
             }}
           >
             {props.body}
           </Typography>
-          <Box sx={{ px: 0, display: "flex", mt: 2, mb: 2 }}>
+          <Box sx={{ px: 0, display: "flex" }}>
             <Box onClick={likeHandler}>
               <FavoriteIcon
-                sx={{ mr: 2, color: like ? "#dc2626" : "#000" }}
+                sx={{ mr: 2, color: like ? "#dc2626" : "#fff" }}
               />
             </Box>
-            <Box sx={{ display: "flex" }}>
-              <NextLink href={`/comment/${id}`}>
-                <CommentIcon sx={{ color: "#000" }} />
-              </NextLink>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width:30,
-                  height:30,
-                  borderRadius:15,
-                  backgroundColor:'#ddd',
-                  ml:1
-                }}
-              >
-                <Typography variant="body1" sx={{ color: "#000",}}>
-                  {props.comments.length}
-                </Typography>
-              </Box>
+            <Box>
+            <NextLink href={`/comment/${id}`} >
+              <CommentIcon sx={{ color: "#fff" }} />
+            </NextLink>
+              
             </Box>
           </Box>
           <Dialog open={open}>
@@ -136,8 +123,6 @@ function Card(props: any) {
             </DialogAction>
           </Dialog>
           <Button
-            sx={{ fontWeight: 600, textTransform: "capitalize" }}
-            color="warning"
             onClick={() => {
               setOpen(true);
             }}
@@ -146,11 +131,7 @@ function Card(props: any) {
           </Button>
 
           <NextLink href={`/createPost?id=${id}`}>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ height: "20px", textTransform: "capitalize" }}
-            >
+            <Button variant="contained" sx={{ height: "20px" }}>
               edit
             </Button>
           </NextLink>
