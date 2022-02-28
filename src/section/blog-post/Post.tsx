@@ -1,23 +1,19 @@
-import React, { ReactNode, useRef } from "react";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import User from "../../component/User";
-import PostMentionInput from "../../component/MentionInput";
-import Box from "@mui/material/Box";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import TagIcon from "@mui/icons-material/Tag";
-import Button from "@mui/material/Button";
 import ImageIcon from "@mui/icons-material/Image";
-import { MentionsInput, Mention } from "react-mentions";
-import { useState } from "react";
-import { MouseEvent } from "react";
+import TagIcon from "@mui/icons-material/Tag";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import "emoji-mart/css/emoji-mart.css";
-import { Popover, TextField } from "@mui/material";
+import { useRouter } from "next/router";
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import { Mention, MentionsInput } from "react-mentions";
 import EmojiPicker from "../../component/EmojiPicker";
 import PostGallery from "../../component/PostGallery";
+import User from "../../component/User";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addForm } from "../../redux/slices/counter-slice";
-import { useRouter } from "next/router";
+import { addForm, editform, getId } from "../../redux/slices/post-slice";
 
 const users = [
   {
@@ -48,16 +44,26 @@ const tags = [
   },
 ];
 
-// interface inputValueType {
-//   text: any
-//   emoji: any
-// }
-
 function Post() {
+  const postEdit = useAppSelector((state) => state.post.postEdit);
   const dispatch = useAppDispatch();
+  const { query } = useRouter();
   const router = useRouter();
   const [text, setText] = useState<string>("");
   const [image, setImage] = useState<string[]>([]);
+
+  // use effect for send id
+  useEffect(() => {
+    if (query.id) dispatch(getId(+query.id));
+  }, [query]);
+
+  // use effect for fill body
+  useEffect(() => {
+    if (postEdit) {
+      setText(postEdit.body);
+      setImage(postEdit.images);
+    }
+  }, [postEdit]);
 
   // add form to list
   function AddFormToList() {
@@ -69,21 +75,45 @@ function Post() {
       .split(/(?<=\~\~\~\_\_)(.*?)(?=\$\$\$\~\~\~)/)
       .filter((item) => !item.includes("~"))
       .toString();
-    dispatch(
-      addForm({
-        id: Math.floor(Math.random() * 1000),
-        body: text,
-        hashtag: hashtag,
-        mentsions: mentions,
-        datetime: "2018-12-10T13:49:51.141Z",
-        createdBy: "student1",
-        images: image,
-        avatarImg: [
-          "https://zone-assets-api.vercel.app/assets/images/avatars/avatar_2.jpg",
-        ],
-      })
-    );
-    router.push("/");
+
+    text.replace(/(?<=\~\~\~\_\_)(?=\$\$\$\~\~\~)/, "");
+    setText("");
+    if (query.id) {
+      dispatch(
+        editform({
+          id: parseInt(query.id as string),
+          body: text,
+          hashtag: hashtag,
+          mentsions: mentions,
+          datetime: "2018-12-10T13:49:51.141Z",
+          createdBy: "student1",
+          images: image,
+          comments: postEdit.comments,
+          avatarImg: [
+            "https://zone-assets-api.vercel.app/assets/images/avatars/avatar_2.jpg",
+          ],
+        })
+      );
+
+      router.push("/");
+    } else {
+      dispatch(
+        addForm({
+          id: Math.floor(Math.random() * 1000),
+          body: text,
+          hashtag: hashtag,
+          mentsions: mentions,
+          datetime: "2018-12-10T13:49:51.141Z",
+          createdBy: "student1",
+          images: image,
+          comments: [],
+          avatarImg: [
+            "https://zone-assets-api.vercel.app/assets/images/avatars/avatar_2.jpg",
+          ],
+        })
+      );
+      router.push("/");
+    }
   }
 
   // ------------------------------------------------
@@ -139,20 +169,14 @@ function Post() {
                 <Mention
                   trigger="@"
                   data={users}
-                  markup="@@@____id__^^^____display__@@@^^^"
+                  markup="@@@(____id__)^^^[____display__]@@@^^^"
                   style={{ backgroundColor: "#d1c4e9" }}
-                  appendSpaceOnAdd={true}
-                  displayTransform={(id, display) => {
-                    return `@${display}`;
-                  }}
                 />
                 <Mention
                   trigger="#"
                   data={tags}
-                  markup="$$$____id__~~~____display__$$$~~~"
+                  markup="$$$(____id__)~~~[____display__]$$$~~~"
                   style={{ backgroundColor: "#d1c4e9" }}
-                  appendSpaceOnAdd={true}
-
                 />
               </MentionsInput>
             </Box>
@@ -187,7 +211,7 @@ function Post() {
 
             <Button
               onClick={() => {
-                setText(text+'@');
+                setText(text + "@");
                 if (inputRef) inputRef.current?.focus();
               }}
             >
@@ -206,8 +230,9 @@ function Post() {
           <PostGallery image={image} setImage={setImage} />
         </Grid>
       </Grid>
-      <Button onClick={AddFormToList}>Add Post</Button>
+      <Button onClick={AddFormToList}> {query.id ? "edit" : "add"} </Button>
     </Container>
   );
 }
+
 export default Post;

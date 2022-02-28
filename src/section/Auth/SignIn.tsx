@@ -1,10 +1,10 @@
 import * as Yup from "yup";
 import NextLink from "next/link";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useAppDispatch , useAppSelector} from "../../redux/hooks";
-import {catchUserName} from '../../redux/slices/users-slice'
+import {catchUserName} from '../../redux/slices/post-slice'
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -19,8 +19,8 @@ type UserSubmitForm = {
 function SignIn() {
   
   const dispatch = useAppDispatch()
-  const currentUser = useAppSelector((state) => state.users.currentUser);
-  const ErrorMessage = useAppSelector((state) => state.users.ErrorMessage);
+  const currentUser = useAppSelector((state) => state.post.currentUser);
+  const ErrorMessage = useAppSelector((state) => state.post.ErrorMessage);
   const router = useRouter();
 
   const validationSchema = Yup.object().shape({
@@ -44,7 +44,7 @@ function SignIn() {
   };
   useEffect(() => {
     if (currentUser) {
-      router.push("/createPost")
+      router.push("/post/list")
     }
   }, [currentUser]);
   return (

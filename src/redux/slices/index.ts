@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import counterReducer from './counter-slice';
-import profileReducer from './profile-slice';
+
 import usersReducer from './users-slice'
 
 

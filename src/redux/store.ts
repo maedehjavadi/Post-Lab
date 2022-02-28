@@ -1,7 +1,7 @@
 
 import {configureStore} from '@reduxjs/toolkit';
-import rootReducer from  './slices';
-import counterReducer from './slices/counter-slice';
+import rootReducer from  './rootReducers';
+import counterReducer from './slices/post-slice';
 
 
 
