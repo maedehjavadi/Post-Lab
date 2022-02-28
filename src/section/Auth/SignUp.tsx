@@ -58,11 +58,10 @@ export default function SignUp() {
       router.push('/')
     }
 
-    // console.log(data);
-    // JSON.stringify(data, null, 2);
   };
 
   return (
+    <Box sx={{display:'flex',justifyContent:'center'}}>
     <Box
       sx={{
         m: 4,
@@ -143,6 +142,7 @@ export default function SignUp() {
           </NextLink>
         </Box>
       </form>
+    </Box>
     </Box>
   );
 }

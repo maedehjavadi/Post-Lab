@@ -1,8 +1,8 @@
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import Card from "./Card";
 import React, { useEffect } from "react";
 import { useState } from "react";
-
+import User from "../../component/User";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addForm } from "../../redux/slices/post-slice";
 
@@ -30,10 +30,37 @@ function CardList(props: any) {
   };
 
   return (
-    <>
+    <Box>
+      <Box
+        sx={{
+          ml: 4,
+          mt: 2,
+          mb:5,
+          display: "flex",
+          gap: 2,
+          alignItems: "center",
+          justifyContent: "start",
+        }}
+      >
+        <NextLink href="/createPost">
+          <Link>
+            <AddBoxIcon
+              fontSize="large"
+              sx={{
+                color: "#1a7fe5",
+                mt: 2,
+                cursor: "pointer",
+                "&:hover": { color: "#1f5387" },
+              }}
+            />
+          </Link>
+        </NextLink>
+        <User />
+      
+      </Box>
+      <Box sx={{m:2}}>
       <Grid container spacing={2}>
         {slice.map((item: any) => (
-     
           <Card
             key={item}
             id={item.id}
@@ -48,18 +75,14 @@ function CardList(props: any) {
           />
         ))}
       </Grid>
-      <NextLink href="/createPost">
-        <Link>
-          <AddBoxIcon sx={{ mt:2}}/>
-        </Link>
-      </NextLink>
       <Button
-        onClick={() => loadMore()}
-        sx={{ display: pagination >= count ? "none" : "" }}
-      >
-        Load More...
-      </Button>
-    </>
+          onClick={() => loadMore()}
+          sx={{ display: pagination >= count ? "none" : "" }}
+        >
+          Load More...
+        </Button>
+      </Box>
+    </Box>
   );
 }
 

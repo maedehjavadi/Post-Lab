@@ -11,6 +11,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { ResetTvRounded } from "@mui/icons-material";
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
+import Container from "@mui/material/Container";
+
 
 type Inputs = {
   example: string;
@@ -47,7 +50,7 @@ export default function PostComment(props: any) {
     formState: { errors, isValid },
   } = useForm<UserSubmitForm>({
     resolver: yupResolver(validationSchema),
-    mode: "onChange"
+    mode: "onChange",
   });
 
   // const {
@@ -67,14 +70,14 @@ export default function PostComment(props: any) {
     });
 
     dispatch(addComment(postData));
-    setTimeout(()=>reset(), 1)
-    
+    setTimeout(() => reset(), 1);
   };
 
   console.log(commentPost?.comments);
 
   return (
-    <>
+    <Container maxWidth="lg" sx={{ p: 4, m: "0 auto" }}>
+    <Button onClick={() => router.back()} variant="contained"><KeyboardBackspaceOutlinedIcon /></Button>
       <Box
         sx={{
           display: "flex",
@@ -96,7 +99,6 @@ export default function PostComment(props: any) {
           <Button
             disabled={!isValid}
             type="submit"
-         
             variant="contained"
             sx={{ ml: 2, mt: 1 }}
           >
@@ -111,24 +113,27 @@ export default function PostComment(props: any) {
           textAlign: "center",
         }}
       >
-        {JSON.parse(JSON.stringify(commentPost?.comments || []))?.reverse().map((item) => (
-          <Box
-            sx={{
-              display: "flex",
-              textAlign: "center",
-              margin: "0 auto",
-              justifyContent: "space-between",
-              width: "80%"
-            }}
-          >
-            <Typography>{item.body}</Typography>
+        {JSON.parse(JSON.stringify(commentPost?.comments || []))
+          ?.reverse()
+          .map((item, i) => (
+            <Box
+              key={i}
+              sx={{
+                display: "flex",
+                textAlign: "center",
+                margin: "0 auto",
+                justifyContent: "space-between",
+                width: "80%",
+              }}
+            >
+              <Typography>{item.body}</Typography>
 
-            <Typography>{item.date?.toLocaleString()}</Typography>
-          </Box>
+              <Typography>{item.date?.toLocaleString()}</Typography>
+            </Box>
 
-          // <Typography>{item.date}</Typography>
-        ))}
+            // <Typography>{item.date}</Typography>
+          ))}
       </Box>
-    </>
+  </Container>
   );
 }

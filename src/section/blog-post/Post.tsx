@@ -14,6 +14,7 @@ import PostGallery from "../../component/PostGallery";
 import User from "../../component/User";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { addForm, editform, getId } from "../../redux/slices/post-slice";
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 
 const users = [
   {
@@ -68,11 +69,11 @@ function Post() {
   // add form to list
   function AddFormToList() {
     const mentions = text
-      .split(/(?<=\^\^\^\__)(.*?)(?=\@\@\@\^\^\^)/)
+      .split(/(?<=\^\^\^\[\__)(.*?)(?=\]\@\@\@\^\^\^)/)
       .filter((item) => !item.includes("@"))
       .toString();
     const hashtag = text
-      .split(/(?<=\~\~\~\_\_)(.*?)(?=\$\$\$\~\~\~)/)
+      .split(/(?<=\~\~\~\[\__)(.*?)(?=\]\$\$\$\~\~\~)/)
       .filter((item) => !item.includes("~"))
       .toString();
 
@@ -140,6 +141,7 @@ function Post() {
 
   return (
     <Container maxWidth="lg" sx={{ p: 4, m: "0 auto" }}>
+       <Button onClick={() => router.back()} variant="contained"><KeyboardBackspaceOutlinedIcon /></Button>
       <Grid container>
         <Grid
           item
@@ -169,13 +171,13 @@ function Post() {
                 <Mention
                   trigger="@"
                   data={users}
-                  markup="@@@(____id__)^^^[____display__]@@@^^^"
+                  markup="@@@(____)^^^[____display__]@@@^^^"
                   style={{ backgroundColor: "#d1c4e9" }}
                 />
                 <Mention
                   trigger="#"
                   data={tags}
-                  markup="$$$(____id__)~~~[____display__]$$$~~~"
+                  markup="$$$(____)~~~[____display__]$$$~~~"
                   style={{ backgroundColor: "#d1c4e9" }}
                 />
               </MentionsInput>
@@ -230,7 +232,7 @@ function Post() {
           <PostGallery image={image} setImage={setImage} />
         </Grid>
       </Grid>
-      <Button onClick={AddFormToList}> {query.id ? "edit" : "add"} </Button>
+      <Button onClick={AddFormToList} color='success' variant="contained"> {query.id ? "edit" : "add"} </Button>
     </Container>
   );
 }
